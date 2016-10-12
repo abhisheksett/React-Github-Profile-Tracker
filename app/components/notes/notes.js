@@ -3,9 +3,11 @@ var React = require('react');
 var NotesList = require('./notesList');
 
 var Notes = React.createClass({
-
+  propTypes: {
+    username: React.PropTypes.string.isRequired,
+    notes: React.PropTypes.array.isRequired
+  },
   render: function(){
-    console.log('Notes:', this.props.notes);
     return (
       <div>
         <h3>Notes for {this.props.username} </h3>

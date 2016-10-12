@@ -1,11 +1,11 @@
-var React = require('react');
-var Routes = require('react-router');
-var ReactFireMixin = require('reactfire');
-var Firebase = require('firebase');
+import React from 'react';
+import Routes from 'react-router';
+import ReactFireMixin from 'reactfire';
+import Firebase from 'firebase';
 
-var UserProfile = require('./github/userProfile');
-var Repos = require('./github/repos');
-var Notes = require('./notes/notes');
+import UserProfile from './github/userProfile';
+import Repos from './github/repos';
+import Notes from './notes/notes';
 
 var Profile = React.createClass({
 
@@ -13,7 +13,8 @@ var Profile = React.createClass({
 
   getInitialState: function(){
     return {
-      notes: [1,2,3],
+      //notes: ["Hello!", "Whats going on?", "TODO: This needs to be changed to db", "random text"],
+      notes: [],
       bio: {
         name: "Abhishek"
       },
@@ -21,15 +22,14 @@ var Profile = React.createClass({
     }
   },
 
+  handleAddNote: function(newNote){
+      this.ref.child(this.props.params.username).child(this.props.notes.length).set(newNote);
+  },
+
   componentDidMount: function(){
-      //this.ref = new Firebase("https://github-profile-tracker.firebaseio.com/");
-      this.ref = new Firebase("https://github-note-tracker.firebaseio.com/");
+      this.ref = new Firebase("https://github-profile-tracker.firebaseio.com/notes");
+      //this.ref = new Firebase("https://github-note-tracker.firebaseio.com/");
       var childRef = this.ref.child(this.props.params.username);
-      this.ref.on('value', function(data){
-        console.log(data);
-      }, function(){
-        console.log(data);
-      });
       this.bindAsArray(childRef, 'notes');
   },
 
