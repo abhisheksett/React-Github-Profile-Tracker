@@ -6,6 +6,7 @@ import Firebase from 'firebase';
 import UserProfile from './github/userProfile';
 import Repos from './github/repos';
 import Notes from './notes/notes';
+import helpers from '../utils/helper';
 
 var Profile = React.createClass({
 
@@ -29,12 +30,28 @@ var Profile = React.createClass({
   componentDidMount: function(){
       this.ref = new Firebase("https://github-profile-tracker.firebaseio.com/notes");
       //this.ref = new Firebase("https://github-note-tracker.firebaseio.com/");
-      var childRef = this.ref.child(this.props.params.username);
-      this.bindAsArray(childRef, 'notes');
+      this.init(this.props.params.username);
   },
 
   componentWillUnmount: function(){
       this.unbind('notes');
+  },
+
+  componentWillReceiveProps: function(nextProps){
+    this.unbind('notes');
+    this.init(nextProps.params.username);
+  },
+
+  init: function(username){
+    var childRef = this.ref.child(username);
+    this.bindAsArray(childRef, 'notes');
+
+    helpers.getGithubInfo(username).then((data) => {
+      this.setState({
+        repos: data.repos,
+        bio: data.bio
+      });
+    });
   },
 
   render: function(){

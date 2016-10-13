@@ -9,6 +9,7 @@
   "author": "Abhishek Sett",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.15.0",
     "firebase": "^2.3.2",
     "history": "^4.3.0",
     "path": "^0.12.7",
