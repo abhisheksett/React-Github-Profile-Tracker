@@ -16,10 +16,8 @@ var Profile = React.createClass({
     return {
       //notes: ["Hello!", "Whats going on?", "TODO: This needs to be changed to db", "random text"],
       notes: [],
-      bio: {
-        name: "Abhishek"
-      },
-      repos: ['a', 'b', 'c']
+      bio: {},
+      repos: []
     }
   },
 
@@ -47,9 +45,22 @@ var Profile = React.createClass({
     this.bindAsArray(childRef, 'notes');
 
     helpers.getGithubInfo(username).then((data) => {
+      if(data){
+        this.setState({
+          repos: data.repos,
+          bio: data.bio
+        });
+      }else{
+        this.setState({
+          repos: [],
+          bio: {}
+        });
+      }
+    }, (data) => {
+      console.log("Error", data);
       this.setState({
-        repos: data.repos,
-        bio: data.bio
+        repos: [],
+        bio: {}
       });
     });
   },

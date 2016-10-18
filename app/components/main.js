@@ -10,6 +10,9 @@ var Main = React.createClass({
           <div className="col-sm-7 col-sm-offset-2" style={{marginTop: 15}}>
             <SearchGithub />
           </div>
+          <div className="col-sm-2" style={{marginTop: 15}}>
+            <button type="button" className="btn btn-primary">Logout</button>
+          </div>
         </nav>
         <div className="container">
           {this.props.children}

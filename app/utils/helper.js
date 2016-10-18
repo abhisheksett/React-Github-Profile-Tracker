@@ -10,11 +10,13 @@ let getUserInfo = function(username){
 
 let helper = {
   getGithubInfo: function(username){
-    return axios.all([getRepos(username), getUserInfo(username)]).then(function(arr){
+    return axios.all([getRepos(username), getUserInfo(username)]).then((arr) => {
       return {
         repos: arr[0].data,
         bio: arr[1].data
       }
+    }).catch((data)=>{
+      Promise.reject(data);
     });
   }
 };
